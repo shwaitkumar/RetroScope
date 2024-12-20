@@ -1,0 +1,16 @@
+//
+//  Constants.sample
+//  RetroScope
+//
+//  Rename this file to `Constants.swift` and add your API key.
+//  Get your API key by signing up at https://roxyapi.com.
+//
+//  Created by Shwait Kumar on 21/12/24.
+//
+
+import Foundation
+
+class Constants {
+    // Add your API key here after signing up at roxyapi.com
+    static let apiKey = "YOUR_API_KEY_HERE"
+}
