@@ -134,7 +134,8 @@ xcuserdata
 
 ### Xcode ###
 
-RetroScope/Config/Constants.swift
+# Exclude Constants.swift for security
+Config/Constants.swift
 
 ## Xcode 8 and earlier
 
