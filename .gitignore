@@ -146,6 +146,6 @@ xcuserdata
 **/xcshareddata/WorkspaceSettings.xcsettings
 
 # Exclude Constants.swift for security
-/Constants.swift
+/Config/Constants.swift
 
 # End of https://www.toptal.com/developers/gitignore/api/swift,macos,xcode,cocoapods,swiftpackagemanager
