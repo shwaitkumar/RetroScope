@@ -35,9 +35,9 @@ extension Symbol {
         .init(id: UUID(), name: "Leo"),
         .init(id: UUID(), name: "Virgo"),
         .init(id: UUID(), name: "Libra"),
-        .init(id: UUID(), name: "Scorpius"),
+        .init(id: UUID(), name: "Scorpio"),
         .init(id: UUID(), name: "Sagittarius"),
-        .init(id: UUID(), name: "Capricornus"),
+        .init(id: UUID(), name: "Capricorn"),
         .init(id: UUID(), name: "Aquarius"),
         .init(id: UUID(), name: "Pisces")
     ]
