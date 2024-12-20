@@ -134,9 +134,6 @@ xcuserdata
 
 ### Xcode ###
 
-# Exclude Constants.swift for security
-Config/Constants.swift
-
 ## Xcode 8 and earlier
 
 ### Xcode Patch ###
@@ -147,5 +144,8 @@ Config/Constants.swift
 !*.xcworkspace/contents.xcworkspacedata
 /*.gcno
 **/xcshareddata/WorkspaceSettings.xcsettings
+
+# Exclude Constants.swift for security
+Config/Constants.swift
 
 # End of https://www.toptal.com/developers/gitignore/api/swift,macos,xcode,cocoapods,swiftpackagemanager
