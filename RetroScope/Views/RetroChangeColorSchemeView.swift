@@ -10,6 +10,8 @@ import SwiftUI
 struct RetroChangeColorSchemeView: View {
     @AppStorage("isDarkMode") var isDarkMode: Bool = false
     
+    @State private var isAnimating: Bool = false
+    
     let dismiss: () -> Void
     
     var body: some View {
@@ -106,6 +108,14 @@ struct RetroChangeColorSchemeView: View {
                         } //: ZSTACK
                         .frame(width: geometry.size.width * (UIDevice.current.userInterfaceIdiom == .phone ? 0.8 : 0.5))
                         .frame(maxHeight: .leastNormalMagnitude, alignment: .center)
+                        .scaleEffect(isAnimating ? 1 : 0)
+                        .animation(.bouncy(duration: 0.5), value: isAnimating)
+                        .onAppear {
+                            isAnimating.toggle()
+                        }
+                        .onDisappear {
+                            isAnimating.toggle()
+                        }
                         
                         Spacer()
                     } //: VSTACK

@@ -57,17 +57,25 @@ struct HomeView: View {
                             print(itemTapped.title)
                             if itemTapped.title == .changeSign {
                                 isMenuPopoverOpen.toggle()
-                                isShowingSelectSignView.toggle()
+                                withAnimation(.easeIn) {
+                                    isShowingSelectSignView.toggle()
+                                }
                             }
                             else if itemTapped.title == .switchColorScheme {
                                 isMenuPopoverOpen.toggle()
-                                isChangeColorSchemeViewOpen.toggle()
+                                withAnimation(.easeIn(duration: 0.3)) {
+                                    isChangeColorSchemeViewOpen.toggle()
+                                }
                             }
                         })
                         .padding()
                         .presentationCompactAdaptation(.popover)
                     })
                 } //: HSTACK
+                .opacity(initialOpacity)
+                .opacity(isAnimating ? 0 : 1)
+                .animation(.easeInOut(duration: 0.8), value: isAnimating)
+                .animation(.easeIn, value: initialOpacity)
                 .padding()
                 
                 VStack {
@@ -88,8 +96,16 @@ struct HomeView: View {
                     Rectangle()
                         .frame(height: 4)
                         .foregroundStyle(LinearGradient(colors: Color.retroColors, startPoint: .leading, endPoint: .trailing))
+                        .scaleEffect(isAnimating ? 0 : 1, anchor: .center)
+                        .scaleEffect(initialOpacity == 0 ? 0 : 1, anchor: .center)
+                        .animation(.easeInOut(duration: 0.6).delay(0.3), value: isAnimating)
+                        .animation(.easeInOut, value: initialOpacity)
                 } //: VSTACK
                 .padding(.horizontal, 32)
+                .opacity(initialOpacity)
+                .opacity(isAnimating ? 0 : 1)
+                .animation(.easeInOut(duration: 0.3).delay(0.3), value: isAnimating)
+                .animation(.easeIn, value: initialOpacity)
                 
                 ScrollView(.vertical) {
                     LazyVStack {
@@ -113,11 +129,11 @@ struct HomeView: View {
                 .contentMargins(.horizontal, 32)
                 .contentMargins(.top, 10)
                 .contentMargins(.bottom, 32)
+                .opacity(initialOpacity)
+                .opacity(isAnimating ? 0 : 1)
+                .animation(.bouncy(duration: 1.0).delay(1.0), value: isAnimating)
+                .animation(.easeIn, value: initialOpacity)
             } //: VSTACK
-            .opacity(initialOpacity)
-            .opacity(isAnimating ? 0 : 1)
-            .animation(.easeIn(duration: 1.0), value: isAnimating)
-            .animation(.easeIn, value: initialOpacity)
             .padding(.vertical)
             .ignoresSafeArea(edges: .bottom)
         } //: ZSTACK
@@ -129,7 +145,7 @@ struct HomeView: View {
             if isErrorRetroAlertOpen {
                 if let errorMessage = errorMessage {
                     RetroErrorAlertView(error: errorMessage, dismiss: {
-                        withAnimation(.easeOut.delay(0.3), {
+                        withAnimation(.easeOut(duration: 0.3), {
                             isErrorRetroAlertOpen.toggle()
                         })
                     })
@@ -137,7 +153,7 @@ struct HomeView: View {
             }
             else if isChangeColorSchemeViewOpen {
                 RetroChangeColorSchemeView(dismiss: {
-                    withAnimation(.easeOut.delay(0.3), {
+                    withAnimation(.easeOut(duration: 0.3), {
                         isChangeColorSchemeViewOpen.toggle()
                     })
                 })
@@ -162,7 +178,7 @@ struct HomeView: View {
             isAnimating.toggle()
         })
         .onChange(of: errorMessage, {
-            withAnimation(.easeInOut(duration: 0.3)) {
+            withAnimation(.easeOut(duration: 0.3)) {
                 isErrorRetroAlertOpen.toggle()
             }
         })

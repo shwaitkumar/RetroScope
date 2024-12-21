@@ -16,7 +16,6 @@ struct ChooseSymbolView: View {
     @State private var isAnimating: Bool = false
     @State private var flipAngle: Double = .zero
     @State private var isRetroActionOverlayVisible: Bool = false
-    @State private var isRetroActionAnimating: Bool = false
     
     @Binding var selectedSymbol: Symbol?
     
@@ -38,6 +37,9 @@ struct ChooseSymbolView: View {
                         }
                     } //: HSTACK
                     .padding()
+                    .scaleEffect(isAnimating ? 1 : 1.5)
+                    .opacity(isAnimating ? 1 : 0)
+                    .animation(.easeInOut(duration: 0.8), value: isAnimating)
                     
                     ScrollView(.horizontal) {
                         LazyHStack(spacing: 0) {
@@ -61,6 +63,10 @@ struct ChooseSymbolView: View {
                     .scrollTargetBehavior(.paging)
                     .scrollPosition(id: $highlightedIndex)
                     .scrollIndicators(.hidden)
+                    .opacity(isAnimating ? 1 : 0)
+                    .scaleEffect(isAnimating ? 1 : 0)
+                    .blur(radius: isAnimating ? 0 : 10)
+                    .animation(.easeInOut(duration: 0.4).delay(0.3), value: isAnimating)
                     .onChange(of: highlightedIndex) {
                         highlightedSymbol = symbols[highlightedIndex ?? 0]
                         flipAngle = flipAngle == .zero ? 360 : .zero
@@ -68,7 +74,7 @@ struct ChooseSymbolView: View {
                     
                     HStack {
                         RetroButtonView(title: "Confirm", color: .vibrantGreen, action: {
-                            withAnimation(.easeInOut(duration: 0.3)) {
+                            withAnimation(.easeIn(duration: 0.3)) {
                                 isRetroActionOverlayVisible.toggle()
                             }
                         })
@@ -76,6 +82,11 @@ struct ChooseSymbolView: View {
                     } //: HSTACK
                     .frame(height: 64)
                     .padding()
+                    .opacity(isAnimating ? 1 : 0)
+                    .scaleEffect(isAnimating ? 1 : 0)
+                    .offset(y: isAnimating ? 0 : geometry.size.height / 2)
+                    .blur(radius: isAnimating ? 0 : 10)
+                    .animation(.easeInOut(duration: 0.8).delay(0.3), value: isAnimating)
                     .visualEffect { content, proxy in
                         content
                             .hueRotation(Angle(degrees: proxy.frame(in: .global).origin.y / 20))
@@ -88,15 +99,12 @@ struct ChooseSymbolView: View {
             .background(
                 Color.ivoryGlow
             )
-            .opacity(isAnimating ? 1 : 0)
-            .animation(.easeIn(duration: 0.3).delay(0.5), value: isAnimating)
             .ignoresSafeArea(edges: .bottom)
             .overlay(alignment: .center, content: {
                 if isRetroActionOverlayVisible {
                     RetroActionView(
                         title: "Confirm \(highlightedSymbol.name)?",
                         confirm: {
-                            isRetroActionAnimating.toggle()
                             withAnimation(.easeOut(duration: 0.3), {
                                 isRetroActionOverlayVisible.toggle()
                                 // Store info here and call api
@@ -107,7 +115,6 @@ struct ChooseSymbolView: View {
                             })
                         },
                         dismiss: {
-                            isRetroActionAnimating.toggle()
                             withAnimation(.easeOut(duration: 0.3), {
                                 isRetroActionOverlayVisible.toggle()
                             })
@@ -115,9 +122,7 @@ struct ChooseSymbolView: View {
                 }
             })
             .onAppear {
-                withAnimation(.easeIn.delay(0.5), {
-                    isAnimating.toggle()
-                })
+                isAnimating.toggle()
             }
         }
     }

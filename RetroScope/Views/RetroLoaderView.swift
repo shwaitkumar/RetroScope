@@ -8,8 +8,6 @@
 import SwiftUI
 
 struct RetroLoaderView: View {
-    @State private var loadingDots = ""
-    @State private var visibleBoxCount = 0
     @State private var filledColorsCount = 0
     
     var body: some View {
@@ -31,8 +29,8 @@ struct RetroLoaderView: View {
                         ForEach(0..<Color.retroColors.count, id: \.self) { index in
                             RoundedRectangle(cornerRadius: 2)
                                 .fill(Color.retroColors[index])
-                                .opacity(filledColorsCount > index ? 1 : 0) // Opacity logic
-                                .animation(.linear(duration: 0.1), value: filledColorsCount)
+                                .opacity(filledColorsCount > index ? 1 : 0)
+                                .animation(.spring(duration: 0.1), value: filledColorsCount)
                                 .padding(.vertical, 4)
                         }
                     }
