@@ -21,7 +21,7 @@ enum PopOverMenuTitle: String {
 
 extension PopOverMenuItem {
     static let popOverMenuItems: [PopOverMenuItem] = [
-        .init(title: .changeSign, color: .royalAmethyst),
-        .init(title: .switchColorScheme, color: .royalAmethyst)
+        .init(title: .changeSign, color: .royalSapphire),
+        .init(title: .switchColorScheme, color: .royalSapphire)
     ]
 }
