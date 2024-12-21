@@ -39,6 +39,8 @@ struct RetroChangeColorSchemeView: View {
                                             Text("Light")
                                                 .foregroundStyle(.royalSapphire)
                                                 .multilineTextAlignment(.leading)
+                                                .lineLimit(5)
+                                                .fixedSize(horizontal: false, vertical: true)
                                         } //: HSTACK
                                         .font(.subheadline)
                                         .fontWeight(isDarkMode ? .regular : .bold)
@@ -58,6 +60,8 @@ struct RetroChangeColorSchemeView: View {
                                             Text("Dark")
                                                 .foregroundStyle(.royalSapphire)
                                                 .multilineTextAlignment(.leading)
+                                                .lineLimit(8)
+                                                .fixedSize(horizontal: false, vertical: true)
                                         } //: HSTACK
                                         .font(.subheadline)
                                         .fontWeight(isDarkMode ? .bold : .regular)
@@ -99,7 +103,7 @@ struct RetroChangeColorSchemeView: View {
                             .padding()
                         } //: ZSTACK
                         .frame(width: geometry.size.width * (UIDevice.current.userInterfaceIdiom == .phone ? 0.8 : 0.5))
-                        .frame(maxHeight: .leastNonzeroMagnitude, alignment: .center)
+                        .frame(maxHeight: .leastNormalMagnitude, alignment: .center)
                         
                         Spacer()
                     } //: VSTACK

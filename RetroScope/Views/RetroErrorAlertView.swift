@@ -30,6 +30,8 @@ struct RetroErrorAlertView: View {
                                     .fontDesign(.monospaced)
                                     .foregroundStyle(.royalSapphire)
                                     .multilineTextAlignment(.center)
+                                    .lineLimit(8)
+                                    .fixedSize(horizontal: false, vertical: true)
                                 
                                 HStack(spacing: 24) {
                                     Spacer()
@@ -46,12 +48,12 @@ struct RetroErrorAlertView: View {
                             .padding(.vertical)
                             .padding()
                         } //: ZSTACK
+                        .frame(width: geometry.size.width * (UIDevice.current.userInterfaceIdiom == .phone ? 0.8 : 0.5))
+                        .frame(maxHeight: .leastNormalMagnitude, alignment: .center)
                         .visualEffect { content, proxy in
                             content
                                 .hueRotation(Angle(degrees: proxy.frame(in: .global).origin.y / 10))
                         }
-                        .frame(width: geometry.size.width * (UIDevice.current.userInterfaceIdiom == .phone ? 0.8 : 0.5))
-                        .frame(maxHeight: .leastNonzeroMagnitude, alignment: .center)
                         
                         Spacer()
                     } //: VSTACK
@@ -62,7 +64,9 @@ struct RetroErrorAlertView: View {
 }
 
 #Preview {
-    RetroErrorAlertView(error: "Error", dismiss: {
+    RetroErrorAlertView(
+        error: "Retro Orange comes alive through a spectrum of shades, tints, and tones, each offering a variation of this regal color. Explore the subtle differences and discover how each variant enhances the beauty and versatility of Retro Orange.",
+        dismiss: {
         print("Button tapped")
     })
 }
