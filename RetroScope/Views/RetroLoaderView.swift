@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct RetroLoaderView: View {
-    private let colors: [Color] = [.vibrantGreen, .amberGlow, .flameOrange, .crimsonBlaze, .royalAmethyst, .azureSky]
     @State private var loadingDots = ""
     @State private var visibleBoxCount = 0
     @State private var filledColorsCount = 0
@@ -29,9 +28,9 @@ struct RetroLoaderView: View {
                     
                     // Foreground animated boxes
                     HStack(spacing: 4) {
-                        ForEach(0..<colors.count, id: \.self) { index in
+                        ForEach(0..<Color.retroColors.count, id: \.self) { index in
                             RoundedRectangle(cornerRadius: 2)
-                                .fill(colors[index])
+                                .fill(Color.retroColors[index])
                                 .opacity(filledColorsCount > index ? 1 : 0) // Opacity logic
                                 .animation(.linear(duration: 0.1), value: filledColorsCount)
                                 .padding(.vertical, 4)
@@ -55,7 +54,7 @@ struct RetroLoaderView: View {
     
     private func animateBoxes() {
         Timer.scheduledTimer(withTimeInterval: 0.2, repeats: true) { timer in
-            if filledColorsCount == colors.count {
+            if filledColorsCount == Color.retroColors.count {
                 filledColorsCount = 0 // Reset after all boxes are visible
             } else {
                 filledColorsCount += 1

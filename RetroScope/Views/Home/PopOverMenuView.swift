@@ -21,7 +21,7 @@ struct PopOverMenuView: View {
                 }
                 .visualEffect { content, proxy in
                     content
-                        .hueRotation(Angle(degrees: proxy.frame(in: .global).origin.y / 10))
+                        .hueRotation(Angle(degrees: proxy.frame(in: .global).origin.y / 20))
                 }
             } //: SCROLLVIEW
         } //: ZSTACK

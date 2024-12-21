@@ -20,8 +20,6 @@ struct HomeView: View {
     
     @Binding var isShowingSelectSignView: Bool
     
-    private let colors: [Color] = [.vibrantGreen, .amberGlow, .flameOrange, .crimsonBlaze, .royalAmethyst, .azureSky]
-    
     var body: some View {
         ZStack {
             VStack {
@@ -41,16 +39,15 @@ struct HomeView: View {
                     
                     Button(action: {
                         UIImpactFeedbackGenerator(style: .soft).impactOccurred()
-                        withAnimation(.easeInOut(duration: 0.3), {
-                            isMenuPopoverOpen.toggle()
-                        })
+                        isMenuPopoverOpen.toggle()
                     }, label: {
                         Image(systemName: "line.3.horizontal")
                             .font(.largeTitle)
                             .fontWeight(.heavy)
                             .fontDesign(.monospaced)
-                            .foregroundStyle(LinearGradient(colors: colors, startPoint: .top, endPoint: .bottom))
+                            .foregroundStyle(LinearGradient(colors: Color.retroColors, startPoint: .top, endPoint: .bottom))
                     })
+                    .disabled(isMenuPopoverOpen)
                     .padding(.leading)
                     .popover(isPresented: $isMenuPopoverOpen,
                              attachmentAnchor: .point(.bottom),
@@ -59,16 +56,12 @@ struct HomeView: View {
                         PopOverMenuView(action: { itemTapped in
                             print(itemTapped.title)
                             if itemTapped.title == .changeSign {
-                                withAnimation(.easeOut(duration: 0.3), {
-                                    isMenuPopoverOpen.toggle()
-                                    isShowingSelectSignView.toggle()
-                                })
+                                isMenuPopoverOpen.toggle()
+                                isShowingSelectSignView.toggle()
                             }
                             else if itemTapped.title == .switchColorScheme {
-                                withAnimation(.easeOut(duration: 0.3), {
-                                    isMenuPopoverOpen.toggle()
-                                    isChangeColorSchemeViewOpen.toggle()
-                                })
+                                isMenuPopoverOpen.toggle()
+                                isChangeColorSchemeViewOpen.toggle()
                             }
                         })
                         .padding()
@@ -94,7 +87,7 @@ struct HomeView: View {
                     
                     Rectangle()
                         .frame(height: 4)
-                        .foregroundStyle(LinearGradient(colors: colors, startPoint: .leading, endPoint: .trailing))
+                        .foregroundStyle(LinearGradient(colors: Color.retroColors, startPoint: .leading, endPoint: .trailing))
                 } //: VSTACK
                 .padding(.horizontal, 32)
                 
@@ -113,9 +106,10 @@ struct HomeView: View {
                         let frame = proxy.frame(in: .scrollView(axis: .vertical))
                         
                         return content
-                            .hueRotation(.degrees(frame.origin.y / 10))
+                            .hueRotation(.degrees(frame.origin.y / 4))
                     }
                 } //: SCROLLVIEW
+                .scrollIndicators(.hidden)
                 .contentMargins(.horizontal, 32)
                 .contentMargins(.top, 10)
                 .contentMargins(.bottom, 32)
@@ -176,7 +170,7 @@ struct HomeView: View {
     
     // Give unique color to each character
     private func colorForCharacter(at index: Int) -> Color {
-        colors[index % colors.count]
+        Color.retroColors[index % Color.retroColors.count]
     }
     
     private func getFormattedDate() -> String {
@@ -190,6 +184,11 @@ struct HomeView: View {
         Task { @MainActor in
             do {
                 self.horoscope = try await NetworkManager.shared.fetchHoroscope(sign: selectedSymbol.name)
+                // Uncomment below line for testing as you might exceed rate limit while editing code and preview calling for API again and again.
+//                self.horoscope = Horoscope(
+//                    sign: "Aries",
+//                    horoscope: "Retro Orange has the hex code #C67C38. The equivalent RGB values are (198, 124, 56), which means it is composed of 52% red, 33% green and 15% blue. The CMYK color codes, used in printers, are C:0 M:37 Y:72 K:22. In the HSV/HSB scale, Retro Orange has a hue of 29°, 72% saturation and a brightness value of 78%.\nDetails of other color codes including equivalent web safe and HTML & CSS colors are given in the table below. Also listed are the closest Pantone® (PMS) and RAL colors.\nRetro Orange is not part of the web colors list and, therefore, cannot be used by name in HTML and CSS code. The best way to apply the color to a web page is to put in its hex, RGB or HSL values. Please also note that the retro orange CMYK numbers mentioned on this page are only approximations and have been calculated from the hex code using well-known formulae."
+//                )
             } catch {
                 isAnimating.toggle()
                 errorMessage = error.localizedDescription

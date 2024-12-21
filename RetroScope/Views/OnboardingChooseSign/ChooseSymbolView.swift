@@ -21,7 +21,6 @@ struct ChooseSymbolView: View {
     @Binding var selectedSymbol: Symbol?
     
     private let symbols = Symbol.symbols
-    private let colors: [Color] = [.vibrantGreen, .amberGlow, .flameOrange, .crimsonBlaze, .royalAmethyst, .azureSky]
     
     var body: some View {
         GeometryReader { geometry in
@@ -43,26 +42,23 @@ struct ChooseSymbolView: View {
                     ScrollView(.horizontal) {
                         LazyHStack(spacing: 0) {
                             ForEach(symbols.indices, id: \.self) { index in
-                                GeometryReader { proxy in
-                                    Image(symbols[index].name)
-                                        .resizable()
-                                        .scaledToFit()
-                                        .padding()
-                                        .frame(width: proxy.size.width, height: proxy.size.width)
-                                        .scrollTransition(axis: .horizontal) { content, phase in
-                                            content
-                                                .rotationEffect(.degrees(phase.value * 360))
-                                                .scaleEffect(phase.isIdentity ? 1 : 0.3, anchor: .center)
-                                                .offset(y: phase.isIdentity ? 0 : 80)
-                                        }
-                                }
-                                .frame(width: geometry.size.width, height: geometry.size.width)
+                                Image(symbols[index].name)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .padding()
+                                    .frame(width: geometry.size.width, height:  geometry.size.width * (UIDevice.current.userInterfaceIdiom == .phone ? 1.0 : 0.8))
+                                    .scrollTransition(axis: .horizontal) { content, phase in
+                                        content
+                                            .rotationEffect(.degrees(phase.value * 360))
+                                            .scaleEffect(phase.isIdentity ? 1 : 0.3, anchor: .center)
+                                            .offset(y: phase.isIdentity ? 0 : 80)
+                                    }
                             }
                         } //: LAZYHSTACK
                         .scrollTargetLayout()
                     } //: SCROLLVIEW
-                    .frame(width: geometry.size.width, height: geometry.size.width)
-                    .scrollTargetBehavior(.viewAligned)
+                    .frame(width: geometry.size.width, height: geometry.size.width * (UIDevice.current.userInterfaceIdiom == .phone ? 1.0 : 0.8))
+                    .scrollTargetBehavior(.paging)
                     .scrollPosition(id: $highlightedIndex)
                     .scrollIndicators(.hidden)
                     .onChange(of: highlightedIndex) {
@@ -76,6 +72,7 @@ struct ChooseSymbolView: View {
                                 isRetroActionOverlayVisible.toggle()
                             }
                         })
+                        .frame(width: geometry.size.width * (UIDevice.current.userInterfaceIdiom == .phone ? 0.8 : 0.5))
                     } //: HSTACK
                     .frame(height: 64)
                     .padding()
@@ -127,7 +124,7 @@ struct ChooseSymbolView: View {
     
     // Give unique color to each character
     private func colorForCharacter(at index: Int) -> Color {
-        colors[index % colors.count]
+        Color.retroColors[index % Color.retroColors.count]
     }
 }
 

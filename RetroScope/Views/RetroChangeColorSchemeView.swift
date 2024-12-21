@@ -22,12 +22,13 @@ struct RetroChangeColorSchemeView: View {
                         
                         ZStack {
                             Rectangle()
-                                .fill(.ivoryGlow.opacity(0.8))
+                                .fill(.ivoryGlow.opacity(0.9))
                                 .stroke(Color.royalSapphire, lineWidth: 3)
                             
                             VStack(spacing: 32) {
                                 HStack {
                                     Button(action: {
+                                        UIImpactFeedbackGenerator(style: .soft).impactOccurred()
                                         withAnimation(.easeInOut.delay(0.3), {
                                             isDarkMode.toggle()
                                         })
@@ -49,6 +50,7 @@ struct RetroChangeColorSchemeView: View {
                                     })
                                     
                                     Button(action: {
+                                        UIImpactFeedbackGenerator(style: .soft).impactOccurred()
                                         withAnimation(.easeInOut.delay(0.3), {
                                             isDarkMode.toggle()
                                         })
@@ -95,7 +97,7 @@ struct RetroChangeColorSchemeView: View {
                                 .frame(height: 44)
                                 .visualEffect { content, proxy in
                                     content
-                                        .hueRotation(Angle(degrees: proxy.frame(in: .global).origin.y / 10))
+                                        .hueRotation(Angle(degrees: proxy.frame(in: .global).origin.y / 20))
                                 }
                             } //: VSTACK
                             .padding(.horizontal)
