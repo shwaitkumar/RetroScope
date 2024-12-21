@@ -12,8 +12,6 @@ struct RetroChangeColorSchemeView: View {
     
     let dismiss: () -> Void
     
-    private let colors: [Color] = [.vibrantGreen, .amberGlow, .flameOrange, .crimsonBlaze, .royalAmethyst, .azureSky]
-    
     var body: some View {
         Rectangle()
             .foregroundStyle(Color.royalSapphire.opacity(0.5))

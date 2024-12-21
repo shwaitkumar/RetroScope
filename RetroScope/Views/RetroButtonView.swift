@@ -14,6 +14,7 @@ struct RetroButtonView: View {
     
     var body: some View {
         Button(action: {
+            UIImpactFeedbackGenerator(style: .medium).impactOccurred()
             action()
         }, label: {
             ZStack {

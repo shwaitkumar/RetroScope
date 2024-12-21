@@ -40,6 +40,7 @@ struct HomeView: View {
                     Spacer()
                     
                     Button(action: {
+                        UIImpactFeedbackGenerator(style: .soft).impactOccurred()
                         withAnimation(.easeInOut(duration: 0.3), {
                             isMenuPopoverOpen.toggle()
                         })
