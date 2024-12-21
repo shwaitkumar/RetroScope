@@ -15,6 +15,7 @@ struct HomeView: View {
     
     @State private var isAnimating: Bool = false
     @State private var isMenuPopoverOpen: Bool = false
+    @State private var isChangeColorSchemeViewOpen: Bool = false
     @State private var isErrorRetroAlertOpen: Bool = false
     
     @Binding var isShowingSelectSignView: Bool
@@ -62,13 +63,11 @@ struct HomeView: View {
                                     isShowingSelectSignView.toggle()
                                 })
                             }
-                            else if itemTapped.title == .reset {
-                                //                                withAnimation(.easeOut(duration: 0.3), {
-                                //                                    isMenuPopoverOpen.toggle()
-                                //                                    withAnimation(.easeInOut(duration: 0.3).delay(0.3), {
-                                //                                        showRetroActionOverlay.toggle()
-                                //                                    })
-                                //                                })
+                            else if itemTapped.title == .switchColorScheme {
+                                withAnimation(.easeOut(duration: 0.3), {
+                                    isMenuPopoverOpen.toggle()
+                                    isChangeColorSchemeViewOpen.toggle()
+                                })
                             }
                         })
                         .padding()
@@ -140,6 +139,13 @@ struct HomeView: View {
                         })
                     })
                 }
+            }
+            else if isChangeColorSchemeViewOpen {
+                RetroChangeColorSchemeView(dismiss: {
+                    withAnimation(.easeOut.delay(0.3), {
+                        isChangeColorSchemeViewOpen.toggle()
+                    })
+                })
             }
         }
         .overlay {

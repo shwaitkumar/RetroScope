@@ -16,12 +16,12 @@ struct PopOverMenuItem: Identifiable {
 
 enum PopOverMenuTitle: String {
     case changeSign = "Change Sign"
-    case reset = "Reset"
+    case switchColorScheme = "Switch Color Scheme"
 }
 
 extension PopOverMenuItem {
     static let popOverMenuItems: [PopOverMenuItem] = [
         .init(title: .changeSign, color: .royalAmethyst),
-        .init(title: .reset, color: .crimsonBlaze)
+        .init(title: .switchColorScheme, color: .royalAmethyst)
     ]
 }
