@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct RetroChangeColorSchemeView: View {
-    @AppStorage("isDarkMode") var isDarkMode: Bool = true
+    @AppStorage("isDarkMode") var isDarkMode: Bool = false
     
     let dismiss: () -> Void
     
