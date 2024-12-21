@@ -17,8 +17,7 @@ struct RetroErrorAlertView: View {
                 .foregroundStyle(Color.royalSapphire.opacity(0.5))
                 .overlay {
                     VStack {
-                        Rectangle()
-                            .fill(.clear)
+                        Spacer()
                         
                         ZStack {
                             Rectangle()
@@ -44,6 +43,7 @@ struct RetroErrorAlertView: View {
                                 .frame(height: 44)
                             } //: VSTACK
                             .padding(.horizontal)
+                            .padding(.vertical)
                             .padding()
                         } //: ZSTACK
                         .visualEffect { content, proxy in
@@ -51,9 +51,9 @@ struct RetroErrorAlertView: View {
                                 .hueRotation(Angle(degrees: proxy.frame(in: .global).origin.y / 10))
                         }
                         .frame(width: geometry.size.width * (UIDevice.current.userInterfaceIdiom == .phone ? 0.8 : 0.5))
+                        .frame(maxHeight: .leastNonzeroMagnitude, alignment: .center)
                         
-                        Rectangle()
-                            .fill(.clear)
+                        Spacer()
                     } //: VSTACK
                 }
                 .ignoresSafeArea(.all)
